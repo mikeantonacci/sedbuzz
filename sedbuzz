@@ -3,7 +3,7 @@
 
 #quit on q, ignore other non-integers
 /^q$/q
-/[0-9]/!d
+/^[0-9]+$/!d
 
 #check divisible by 5
 /[05]$/s/(.*)/&buzz/
