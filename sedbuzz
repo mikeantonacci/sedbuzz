@@ -37,16 +37,16 @@
     x
     s/1{3}//g
     /^$/s/^/fizz/
+
     /fizz/G
     /fizz/!x
-    /fizz|buzz/s/\n//g
+    /fizz|buzz/ {
+        s/\n//g
+        s/[0-9]//g
+    }
 
-    #print numbers
-    /fizz|buzz/!P
-
-    #print fizz/buzz/fizzbuzz
-    s/[0-9]//g
-    /fizz|buzz/p
+    #print result
+    P
 
     #clear hold buffer
     s/.*//
