@@ -1,13 +1,19 @@
-#sed script
+#sedbuzz is fizzbuzz in sed
+#uses extended regular expressions
+
+#quit on q, ignore other non-integers
+/^q$/q
 /[0-9]/!d
 
-#check $_ % 5
+#check divisible by 5
 /[05]$/s/(.*)/&buzz/
 
 /^[0-9]+(buzz)?/ {
-#check $_ % 3
-    s/([0-9]*)+(buzz)?/\1-\1\2/g
+#check divisible by 3 
+    s/([0-9]*)+(buzz)?/\1\
+\1\2/g
 
+    #convert to unary
     :LOOP
     s/0(0*)(buzz|$)/_\1\2/
     s/1($|buzz|_)/0\1/g
@@ -20,28 +26,25 @@
     s/8($|buzz|_)/7\1/g
     s/9($|buzz|_)/8\1/g
     s/_/9/
-    s/([0-9]*-|^)_(buzz|$)/\10\2/
+    s/([0-9]*\n|^)_(buzz|$)/\10\2/
     x
     s/(.*)/\11/
     x
-    /(-|^)00*(b|$)/!b LOOP
+    /(\n|^)00*(b|$)/!b LOOP
 
-#get ready to print
+    #check divisibility
     x
     s/1{3}//g
     /^$/s/^/fizz/
-    G
+    /fizz/G
+    /fizz/!x
     /fizz|buzz/s/\n//g
 
 #print numbers
-    /fizz|buzz/! {
-        s/^[^\n]*\n//
-        s/-.*$//
-        p
-    }
+    /fizz|buzz/!P
+
 #print fizz/buzz/fizzbuzz
     s/[0-9]//g
-    s/-//g
     /fizz|buzz/p
 
 #zero out hold
