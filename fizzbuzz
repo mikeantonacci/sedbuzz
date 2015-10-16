@@ -1,4 +1,0 @@
-#!/bin/sh
-#print the first $1 fizzbuzz numbers
-
-seq $1 | sed -nrf sedbuzz

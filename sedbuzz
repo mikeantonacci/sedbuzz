@@ -1,5 +1,5 @@
+#!/bin/sed -nrf
 #sedbuzz is fizzbuzz in sed
-#uses extended regular expressions
 
 #quit on q, ignore other non-integers
 /^q$/q
