@@ -33,7 +33,7 @@
     x
     /(\n|^)00*(b|$)/!b LOOP
 
-    #check divisibe by 3
+    #check divisible by 3
     x
     s/1{3}//g
     /^$/s/^/fizz/
