@@ -5,45 +5,33 @@
 /^q$/q
 /^[0-9]+$/!d
 
-#check divisibility by 5
-/5|[0-9]+0$/s/(.*)/&buzz/
-
-/^[0-9]+(buzz)?/ {
+/^[0-9]+/ {
 
     #preserve original value
-    s/([0-9]*)+(buzz)?/\1\
-\1\2/g
+    h
 
-    #convert to unary
-    :LOOP
-    s/0(0*)(buzz|$)/_\1\2/
-    s/1($|buzz|_)/0\1/g
-    s/2($|buzz|_)/1\1/g
-    s/3($|buzz|_)/2\1/g
-    s/4($|buzz|_)/3\1/g
-    s/5($|buzz|_)/4\1/g
-    s/6($|buzz|_)/5\1/g
-    s/7($|buzz|_)/6\1/g
-    s/8($|buzz|_)/7\1/g
-    s/9($|buzz|_)/8\1/g
-    s/_/9/
-    s/([0-9]*\n|^)_(buzz|$)/\10\2/
-    x
-    s/(.*)/\11/
-    x
-    /(\n|^)00*(b|$)/!b LOOP
+    #check divisibility by 3 via casting out threes.
+    s/[47]/1/g
+    s/[58]/2/g
+    s/[0369]//g
+    :CAST_OUT
+    s/11/2/g
+    s/22/1/g
+    s/12//g
+    s/21//g
+    /^[12]?$/ !b CAST_OUT
 
-    #check divisibility by 3
+    /^$/ {
+	s/^$/fizz/
+	H
+    }
     x
-    s/1{3}//g
-    /^$/s/^/fizz/
-    /fizz/G
-    /fizz/!x
 
+    #check divisibility by 5
+    /(5|[0-9]+0)(\nfizz)?$/s/(.*)/&buzz/
     #format and print result
     /fizz|buzz/ {
-        s/\n//g
-        s/[0-9]//g
+        s/[0-9]*\n?//g
     }
     P
 
