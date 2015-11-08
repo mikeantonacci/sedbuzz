@@ -1,0 +1,4 @@
+language: sed
+install: true
+script:
+ - if [[ $(diff <(seq 15 | sed -nrf sedbuzz | tr '\n' ' ') <(echo -n '1 2 fizz 4 buzz fizz 7 8 fizz buzz 11 fizz 13 14 fizzbuzz ')) == '' ]]; then exit; else exit 1; fi
